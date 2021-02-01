@@ -14,5 +14,7 @@
         <property name="hbm2ddl.auto">create-drop</property>
 
         <mapping class="com.gmail.yuramitryahin.model.Movie"/>
+        <mapping class="com.gmail.yuramitryahin.model.MovieSession"/>
+        <mapping class="com.gmail.yuramitryahin.model.CinemaHall"/>
     </session-factory>
 </hibernate-configuration>
