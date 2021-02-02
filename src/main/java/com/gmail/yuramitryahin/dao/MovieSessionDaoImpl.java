@@ -17,7 +17,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllSessionsByDate =
                     session.createQuery("SELECT ms FROM MovieSession ms "
-                                    + "LEFT JOIN FETCH ms.cinemaHall LEFT JOIN FETCH ms.movie"
                                     + " WHERE ms.movie.id = :movie_id "
                                     + "AND DATE_FORMAT(ms.showTime, '%Y-%m-%d') = :show_time ",
                             MovieSession.class);
