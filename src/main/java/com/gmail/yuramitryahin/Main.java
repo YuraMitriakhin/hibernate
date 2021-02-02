@@ -30,6 +30,7 @@ public class Main {
         movieService.add(movie);
         cinemaHallService.add(cinemaHall);
         movieSessionService.add(movieSession);
-        System.out.println(movieSessionService.findAvailableSessions(1L, LocalDate.now()));
+        System.out.println(movieSessionService.findAvailableSessions(movie.getId(),
+                LocalDate.now()));
     }
 }
