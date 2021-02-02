@@ -28,7 +28,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.select(root).where(predicate);
             return session.createQuery(query).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find movie session by parameters", e);
+            throw new DataProcessingException("Can't find movie session by parameters id="
+                    + movieId + " date=" + date, e);
         }
     }
 
