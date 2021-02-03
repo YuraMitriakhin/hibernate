@@ -16,5 +16,6 @@
         <mapping class="com.gmail.yuramitryahin.model.Movie"/>
         <mapping class="com.gmail.yuramitryahin.model.MovieSession"/>
         <mapping class="com.gmail.yuramitryahin.model.CinemaHall"/>
+        <mapping class="com.gmail.yuramitryahin.model.User"/>
     </session-factory>
 </hibernate-configuration>
