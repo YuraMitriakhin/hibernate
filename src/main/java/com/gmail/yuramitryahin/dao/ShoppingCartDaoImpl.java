@@ -7,7 +7,6 @@ import com.gmail.yuramitryahin.model.User;
 import com.gmail.yuramitryahin.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
@@ -36,14 +35,14 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart getByUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("select sc from ShoppingCart sc"
-                    + " left join fetch sc.tickets t "
-                    + "left join fetch t.movieSession ms "
-                    + "left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall "
-                    + " WHERE sc.user=:user", ShoppingCart.class);
-            query.setParameter("user", user);
-            return (ShoppingCart) query.getSingleResult();
+            return session.createQuery("select sc from ShoppingCart sc "
+                    + "left join fetch sc.tickets t "
+                    + "left join fetch t.movieSession m "
+                    + "left join fetch m.cinemaHall "
+                    + "left join fetch m.movie "
+                    + "where sc.user = :user", ShoppingCart.class)
+                    .setParameter("user", user)
+                    .getSingleResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find shopping cart by user="
                     + user, e);
