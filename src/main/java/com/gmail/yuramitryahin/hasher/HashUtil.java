@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-public class Sha512Hasher {
+public class HashUtil {
     private static final int SIZE = 128;
 
     public static String hash(String passwordToHash, byte[] salt) {

@@ -1,7 +1,7 @@
 package com.gmail.yuramitryahin.service;
 
 import com.gmail.yuramitryahin.exception.AuthenticationException;
-import com.gmail.yuramitryahin.hasher.Sha512Hasher;
+import com.gmail.yuramitryahin.hasher.HashUtil;
 import com.gmail.yuramitryahin.lib.Inject;
 import com.gmail.yuramitryahin.lib.Service;
 import com.gmail.yuramitryahin.model.User;
@@ -18,7 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User login(String email, String password) throws AuthenticationException {
         Optional<User> optionalUser = userService.findByEmail(email);
         if (optionalUser.isPresent()
-                && Sha512Hasher.checkPassword(optionalUser.get().getPassword(),
+                && HashUtil.checkPassword(optionalUser.get().getPassword(),
                 password, optionalUser.get().getSalt())) {
             return optionalUser.get();
         }
