@@ -20,10 +20,10 @@ public class Main {
             .getInstance(MovieSessionService.class);
     private static final MovieService movieService = (MovieService) injector
             .getInstance(MovieService.class);
-    private static final User user = authenticationService
-            .register("user@gmail.com", "1234");
 
     public static void main(String[] args) throws AuthenticationException {
+        final User user = authenticationService
+                .register("user@gmail.com", "1234");
         MovieSession movieSession = new MovieSession();
         Movie movie = new Movie();
         movie.setTitle("Moana");
