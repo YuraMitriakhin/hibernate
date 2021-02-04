@@ -1,7 +1,7 @@
 package com.gmail.yuramitryahin.service;
 
 import com.gmail.yuramitryahin.exception.AuthenticationException;
-import com.gmail.yuramitryahin.hasher.Sha512Hasher;
+import com.gmail.yuramitryahin.hasher.HashUtil;
 import com.gmail.yuramitryahin.lib.Inject;
 import com.gmail.yuramitryahin.lib.Service;
 import com.gmail.yuramitryahin.model.User;
@@ -11,12 +11,14 @@ import java.util.Optional;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private UserService userService;
+    @Inject
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
         Optional<User> optionalUser = userService.findByEmail(email);
         if (optionalUser.isPresent()
-                && Sha512Hasher.checkPassword(optionalUser.get().getPassword(),
+                && HashUtil.checkPassword(optionalUser.get().getPassword(),
                 password, optionalUser.get().getSalt())) {
             return optionalUser.get();
         }
@@ -25,6 +27,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User register(String email, String password) {
-        return userService.add(new User(email, password));
+        User user = new User(email, password);
+        userService.add(user);
+        shoppingCartService.registerNewShoppingCart(user);
+        return user;
     }
 }
