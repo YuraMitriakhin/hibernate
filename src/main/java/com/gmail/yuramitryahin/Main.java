@@ -22,14 +22,14 @@ public class Main {
             .getInstance(MovieService.class);
 
     public static void main(String[] args) throws AuthenticationException {
-        final User user = authenticationService
-                .register("user@gmail.com", "1234");
         MovieSession movieSession = new MovieSession();
         Movie movie = new Movie();
         movie.setTitle("Moana");
         movieSession.setMovie(movie);
         movieService.add(movie);
         movieSessionService.add(movieSession);
+        User user = authenticationService
+                .register("user@gmail.com", "1234");
         shoppingCartService.addSession(movieSession, user);
         shoppingCartService.clear(shoppingCartService.getByUser(user));
         System.out.println(shoppingCartService.getByUser(user));
