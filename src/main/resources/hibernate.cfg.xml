@@ -19,5 +19,6 @@
         <mapping class="com.gmail.yuramitryahin.model.User"/>
         <mapping class="com.gmail.yuramitryahin.model.Ticket"/>
         <mapping class="com.gmail.yuramitryahin.model.ShoppingCart"/>
+        <mapping class="com.gmail.yuramitryahin.model.Order"/>
     </session-factory>
 </hibernate-configuration>
