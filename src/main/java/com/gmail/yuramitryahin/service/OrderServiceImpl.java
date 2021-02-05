@@ -7,6 +7,7 @@ import com.gmail.yuramitryahin.model.Order;
 import com.gmail.yuramitryahin.model.ShoppingCart;
 import com.gmail.yuramitryahin.model.User;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,7 +19,7 @@ public class OrderServiceImpl implements OrderService {
     public Order completeOrder(ShoppingCart shoppingCart) {
         Order order = new Order();
         order.setUser(shoppingCart.getUser());
-        order.setTickets(shoppingCart.getTickets());
+        order.setTickets(new ArrayList<>(shoppingCart.getTickets()));
         order.setOrderDate(LocalDateTime.now());
         return orderDao.add(order);
     }
