@@ -1,22 +1,26 @@
 package com.gmail.yuramitryahin.dao;
 
 import com.gmail.yuramitryahin.exception.DataProcessingException;
-import com.gmail.yuramitryahin.lib.Dao;
 import com.gmail.yuramitryahin.model.Order;
 import com.gmail.yuramitryahin.model.User;
-import com.gmail.yuramitryahin.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class OrderDaoImpl implements OrderDao {
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
     public Order add(Order order) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(order);
             transaction.commit();
@@ -35,7 +39,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOrdersHistory(User user) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("select distinct o from Order o "
                     + "left join fetch o.tickets t "
                     + "left join fetch t.movieSession ms "

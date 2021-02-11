@@ -12,7 +12,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.stereotype.Component;
 
+@Component
 @Entity
 @Table(name = "orders")
 public class Order {

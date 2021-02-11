@@ -1,16 +1,20 @@
 package com.gmail.yuramitryahin.service;
 
 import com.gmail.yuramitryahin.dao.MovieSessionDao;
-import com.gmail.yuramitryahin.lib.Inject;
-import com.gmail.yuramitryahin.lib.Service;
 import com.gmail.yuramitryahin.model.MovieSession;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-    @Inject
-    private MovieSessionDao movieSessionDao;
+    private final MovieSessionDao movieSessionDao;
+
+    @Autowired
+    public MovieSessionServiceImpl(MovieSessionDao movieSessionDao) {
+        this.movieSessionDao = movieSessionDao;
+    }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {

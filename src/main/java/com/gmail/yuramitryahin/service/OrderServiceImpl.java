@@ -1,19 +1,23 @@
 package com.gmail.yuramitryahin.service;
 
 import com.gmail.yuramitryahin.dao.OrderDao;
-import com.gmail.yuramitryahin.lib.Inject;
-import com.gmail.yuramitryahin.lib.Service;
 import com.gmail.yuramitryahin.model.Order;
 import com.gmail.yuramitryahin.model.ShoppingCart;
 import com.gmail.yuramitryahin.model.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Inject
-    private OrderDao orderDao;
+    private final OrderDao orderDao;
+
+    @Autowired
+    public OrderServiceImpl(OrderDao orderDao) {
+        this.orderDao = orderDao;
+    }
 
     @Override
     public Order completeOrder(ShoppingCart shoppingCart) {

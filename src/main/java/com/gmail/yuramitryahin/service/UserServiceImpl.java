@@ -2,15 +2,19 @@ package com.gmail.yuramitryahin.service;
 
 import com.gmail.yuramitryahin.dao.UserDao;
 import com.gmail.yuramitryahin.hasher.HashUtil;
-import com.gmail.yuramitryahin.lib.Inject;
-import com.gmail.yuramitryahin.lib.Service;
 import com.gmail.yuramitryahin.model.User;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Inject
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public User add(User user) {

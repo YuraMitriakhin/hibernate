@@ -1,20 +1,28 @@
 package com.gmail.yuramitryahin.dao;
 
 import com.gmail.yuramitryahin.exception.DataProcessingException;
-import com.gmail.yuramitryahin.lib.Dao;
 import com.gmail.yuramitryahin.model.Ticket;
-import com.gmail.yuramitryahin.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class TicketDaoImpl implements TicketDao {
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public TicketDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public Ticket add(Ticket ticket) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(ticket);
             transaction.commit();
