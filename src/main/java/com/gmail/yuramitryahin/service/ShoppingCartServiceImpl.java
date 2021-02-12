@@ -2,19 +2,23 @@ package com.gmail.yuramitryahin.service;
 
 import com.gmail.yuramitryahin.dao.ShoppingCartDao;
 import com.gmail.yuramitryahin.dao.TicketDao;
-import com.gmail.yuramitryahin.lib.Inject;
-import com.gmail.yuramitryahin.lib.Service;
 import com.gmail.yuramitryahin.model.MovieSession;
 import com.gmail.yuramitryahin.model.ShoppingCart;
 import com.gmail.yuramitryahin.model.Ticket;
 import com.gmail.yuramitryahin.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    @Inject
-    private ShoppingCartDao shoppingCartDao;
-    @Inject
-    private TicketDao ticketDao;
+    private final ShoppingCartDao shoppingCartDao;
+    private final TicketDao ticketDao;
+
+    @Autowired
+    public ShoppingCartServiceImpl(ShoppingCartDao shoppingCartDao, TicketDao ticketDao) {
+        this.shoppingCartDao = shoppingCartDao;
+        this.ticketDao = ticketDao;
+    }
 
     @Override
     public void addSession(MovieSession movieSession, User user) {

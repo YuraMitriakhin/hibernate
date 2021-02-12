@@ -1,22 +1,30 @@
 package com.gmail.yuramitryahin.dao;
 
 import com.gmail.yuramitryahin.exception.DataProcessingException;
-import com.gmail.yuramitryahin.lib.Dao;
 import com.gmail.yuramitryahin.model.CinemaHall;
-import com.gmail.yuramitryahin.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
@@ -35,7 +43,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<CinemaHall> getAllCommentsQuery = session
                     .createQuery("from CinemaHall", CinemaHall.class);
             return getAllCommentsQuery.getResultList();

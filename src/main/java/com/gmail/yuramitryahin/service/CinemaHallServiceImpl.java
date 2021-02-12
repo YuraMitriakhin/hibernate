@@ -1,15 +1,19 @@
 package com.gmail.yuramitryahin.service;
 
 import com.gmail.yuramitryahin.dao.CinemaHallDao;
-import com.gmail.yuramitryahin.lib.Inject;
-import com.gmail.yuramitryahin.lib.Service;
 import com.gmail.yuramitryahin.model.CinemaHall;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
-    @Inject
-    private CinemaHallDao cinemaHallDao;
+    private final CinemaHallDao cinemaHallDao;
+
+    @Autowired
+    public CinemaHallServiceImpl(CinemaHallDao cinemaHallDao) {
+        this.cinemaHallDao = cinemaHallDao;
+    }
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {

@@ -1,20 +1,28 @@
 package com.gmail.yuramitryahin.dao;
 
 import com.gmail.yuramitryahin.exception.DataProcessingException;
-import com.gmail.yuramitryahin.lib.Dao;
 import com.gmail.yuramitryahin.model.MovieSession;
-import com.gmail.yuramitryahin.util.HibernateUtil;
 import java.time.LocalDate;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public MovieSessionDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAllSessionsByDate =
                     session.createQuery("SELECT ms FROM MovieSession ms "
                                     + " WHERE ms.movie.id = :movie_id "
@@ -34,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
