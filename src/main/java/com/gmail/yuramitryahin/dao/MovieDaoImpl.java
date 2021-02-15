@@ -52,10 +52,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select m from Movie m where m.id=:id",
-                    Movie.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
+            return session.get(Movie.class, id);
         } catch (Exception e) {
             throw new DataProcessingException("Error select movies ", e);
         }

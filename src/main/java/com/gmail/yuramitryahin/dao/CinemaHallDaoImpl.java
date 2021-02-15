@@ -55,10 +55,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select c from CinemaHall c where c.id=:id",
-                    CinemaHall.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
+            return session.get(CinemaHall.class, id);
         } catch (Exception e) {
             throw new DataProcessingException("Could not get all cinema halls ", e);
         }
