@@ -43,5 +43,4 @@ public class ShoppingCartController {
         User user = userService.get(userId);
         return shoppingCartMapper.toDto(shoppingCartService.getByUser(user));
     }
-
 }

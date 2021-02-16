@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShoppingCartResponseDto {
-    private long id;
+    private Long id;
     private List<Long> ticketIds;
 }
