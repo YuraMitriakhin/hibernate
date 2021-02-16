@@ -48,4 +48,13 @@ public class MovieDaoImpl implements MovieDao {
             throw new DataProcessingException("Error select movies ", e);
         }
     }
+
+    @Override
+    public Movie get(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Movie.class, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Error select movies ", e);
+        }
+    }
 }
