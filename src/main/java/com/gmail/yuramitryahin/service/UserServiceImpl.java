@@ -1,26 +1,26 @@
 package com.gmail.yuramitryahin.service;
 
 import com.gmail.yuramitryahin.dao.UserDao;
-import com.gmail.yuramitryahin.hasher.HashUtil;
 import com.gmail.yuramitryahin.model.User;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User add(User user) {
-        byte[] salt = HashUtil.generateSalt();
-        user.setSalt(salt);
-        user.setPassword(HashUtil.hash(user.getPassword(), salt));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userDao.add(user);
     }
 
