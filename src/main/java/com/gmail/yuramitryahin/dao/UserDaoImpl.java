@@ -52,4 +52,13 @@ public class UserDaoImpl implements UserDao {
                     + email, e);
         }
     }
+
+    @Override
+    public Optional<User> get(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(User.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Could not get user by id " + id, e);
+        }
+    }
 }
