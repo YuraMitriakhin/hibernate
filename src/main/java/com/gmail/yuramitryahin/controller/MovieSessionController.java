@@ -7,6 +7,7 @@ import com.gmail.yuramitryahin.service.mapper.MovieSessionMapper;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,13 +34,13 @@ public class MovieSessionController {
     }
 
     @PostMapping
-    public void add(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
+    public void add(@RequestBody @Valid MovieSessionRequestDto movieSessionRequestDto) {
         movieSessionService.add(movieSessionMapper.toMovieSession(movieSessionRequestDto));
     }
 
     @PutMapping("/{id}")
     public void put(@PathVariable("id") Long id,
-                    @RequestBody MovieSessionRequestDto movieSessionRequestDto) {
+                    @RequestBody @Valid MovieSessionRequestDto movieSessionRequestDto) {
         movieSessionService.update(movieSessionMapper.toMovieSession(id, movieSessionRequestDto));
     }
 
@@ -56,5 +57,4 @@ public class MovieSessionController {
                 .map(movieSessionMapper::toMovieSessionResponseDto)
                 .collect(Collectors.toList());
     }
-
 }

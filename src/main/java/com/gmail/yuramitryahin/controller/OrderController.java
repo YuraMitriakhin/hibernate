@@ -9,10 +9,11 @@ import com.gmail.yuramitryahin.service.mapper.OrderMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,14 +34,16 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void complete(@RequestParam Long userId) {
-        User user = userService.get(userId);
+    public void complete(Authentication authentication) {
+        UserDetails details = (UserDetails) authentication.getPrincipal();
+        User user = userService.findByEmail(details.getUsername()).get();
         orderService.completeOrder(shoppingCartService.getByUser(user));
     }
 
     @GetMapping
-    public List<OrderResponseDto> getHistory(@RequestParam Long userId) {
-        User user = userService.get(userId);
+    public List<OrderResponseDto> getHistory(Authentication authentication) {
+        UserDetails details = (UserDetails) authentication.getPrincipal();
+        User user = userService.findByEmail(details.getUsername()).get();
         return orderService.getOrdersHistory(user).stream()
                 .map(orderMapper::toDto)
                 .collect(Collectors.toList());
