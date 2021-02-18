@@ -10,11 +10,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = {"com.gmail.yuramitryahin.dao",
-        "com.gmail.yuramitryahin.service"})
+        "com.gmail.yuramitryahin.service",
+        "com.gmail.yuramitryahin.security",
+        "com.gmail.yuramitryahin.injection"})
 public class AppConfig {
     private final Environment environment;
 
@@ -44,4 +48,10 @@ public class AppConfig {
         sessionFactoryBean.setPackagesToScan("com.gmail.yuramitryahin.model");
         return sessionFactoryBean;
     }
+
+    @Bean
+    public PasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }
