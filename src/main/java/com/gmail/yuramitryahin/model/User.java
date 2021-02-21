@@ -3,11 +3,10 @@ package com.gmail.yuramitryahin.model;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +26,6 @@ public class User {
     @Column(unique = true, length = 20)
     private String email;
     private String password;
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private Set<Role> role;
 }
