@@ -45,8 +45,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("select u from User u"
-                    + " join fetch u.role "
-                    + "WHERE u.email=:email");
+                    + " join fetch u.role WHERE u.email=:email");
             query.setParameter("email", email);
             return query.uniqueResultOptional();
         } catch (Exception e) {
