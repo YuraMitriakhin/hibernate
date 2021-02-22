@@ -25,9 +25,8 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByEmail(username).orElseThrow(() ->
-                new UsernameNotFoundException("User not found!"));
-        UserBuilder builder = null;
-        builder = withUsername(username);
+                new UsernameNotFoundException(username + " user not found!"));
+        UserBuilder builder = withUsername(username);
         builder.password(user.getPassword());
         builder.roles(getStringRoles(user.getRole()));
         return builder.build();
